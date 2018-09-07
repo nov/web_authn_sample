@@ -734,6 +734,10 @@ button,
       border-radius: 100%;
       box-shadow: 0 0 0 1.5em #ffffff;
     }
+    #main .avatar span {
+      padding: 0 6px 0 10px;
+      background-color: #ffffff;
+    }
 
     #main .avatar:before {
       content: '';
