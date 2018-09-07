@@ -1,6 +1,6 @@
-const password_less = {};
+var password_less = {};
 
-password_less.authenticate = (event) => {
+password_less.authenticate = function (event) {
   event.preventDefault();
 
   let public_key_options = {
@@ -15,7 +15,7 @@ password_less.authenticate = (event) => {
   }).then(password_less.authenticated, error);
 };
 
-password_less.authenticated = (assertion, event) => {
+password_less.authenticated = function (assertion, event) {
   console.info(event);
   console.info(event.target);
   console.info('assertion', assertion);
@@ -45,13 +45,13 @@ password_less.authenticated = (assertion, event) => {
   );
 };
 
-const error = (reason) => {
+var error = function (reason) {
   console.log('error', reason);
 }
 
-const __url_safe_b64_encode__ = (array_buffer) => {
-  let uint8_array = new Uint8Array(array_buffer).reduce(
-    (s, byte) => s + String.fromCharCode(byte), ''
-  );
+var __url_safe_b64_encode__ = function (array_buffer) {
+  var uint8_array = new Uint8Array(array_buffer).reduce(function (s, byte) {
+    s + String.fromCharCode(byte), ''
+  });
   return btoa(uint8_array).replace(/\//g, '_').replace(/\+/g, '-').replace(/=/g, '');
 };
