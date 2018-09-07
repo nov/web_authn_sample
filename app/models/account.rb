@@ -5,12 +5,12 @@ class Account < ApplicationRecord
   validates :display_name, presence: true
 
   def register_with!(authenticator)
-    account.authenticators.new(
+    authenticators.new(
       credential_id: authenticator.credential_id,
       public_key_pem: authenticator.public_key.to_pem,
       sign_count: authenticator.sign_count
     )
-    account.save!
-    account
+    save!
+    self
   end
 end
