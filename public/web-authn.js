@@ -21,7 +21,7 @@ password_less.regsiter = (event) => {
       name: document.title
     },
     authenticatorSelection: {
-      // requireResidentKey: true // NOTE: turn-off during debugging
+      requireResidentKey: true // NOTE: turn-off during debugging
     },
     user: user
   };
@@ -66,7 +66,7 @@ password_less.authenticate = (event) => {
 
   navigator.credentials.get({
     publicKey: public_key_options
-  }).then(() => {
+  }).then((assertion) => {
     console.info('assertion', assertion);
     console.log(
       'assertion.rawId',
@@ -92,6 +92,12 @@ password_less.authenticate = (event) => {
       'attestation.getClientExtensionResults()',
       attestation.getClientExtensionResults()
     );
+    event.target.authenticator_data.value = __url_safe_b64_encode__(attestation.response.authenticatorData);
+    event.target.client_data_json.value = __url_safe_b64_encode__(attestation.response.clientDataJSON);
+    event.target.signature.value = __url_safe_b64_encode__(attestation.response.signature);
+    event.target.credential_id.value = __url_safe_b64_encode__(assertion.rawId);
+    event.target.removeEventListener('submit', password_less.register);
+    // event.target.submit();
   }, error);
 };
 
