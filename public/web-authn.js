@@ -21,7 +21,7 @@ password_less.regsiter = (event) => {
       name: document.title
     },
     authenticatorSelection: {
-      requireResidentKey: true // NOTE: turn-off during debugging
+      // requireResidentKey: true // NOTE: turn-off during debugging
     },
     user: user
   };
