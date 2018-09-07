@@ -46,8 +46,7 @@ module Concerns
     end
 
     def authenticated?
-      current_account.present? &&
-      current_account.enabled?
+      current_account.present?
     end
 
     def authenticate(user)
