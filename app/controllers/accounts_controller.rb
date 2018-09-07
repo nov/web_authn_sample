@@ -6,17 +6,19 @@ class AccountsController < ApplicationController
       challenge: session.delete(:challenge)
     )
     if context.registration?
-      context.verify! params[:attestation_object]
       account = Account.new(
         email: params[:email],
         display_name: params[:display_name]
       )
-      account.authenticators.new(
-        credential_id: context.credential_id,
-        public_key_pem: context.public_key.to_pem,
-        sign_count: context.sign_count
-      )
-      account.save!
+      if account.valid?
+        context.verify! params[:attestation_object]
+        account.authenticators.new(
+          credential_id: context.credential_id,
+          public_key_pem: context.public_key.to_pem,
+          sign_count: context.sign_count
+        )
+        account.save!
+      end
     end
     redirect_to root_url
   end

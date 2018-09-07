@@ -50,7 +50,7 @@ password_less.regsiter = (event) => {
     event.target.attestation_object.value = __url_safe_b64_encode__(attestation.response.attestationObject);
     event.target.client_data_json.value = __url_safe_b64_encode__(attestation.response.clientDataJSON);
     event.target.removeEventListener('submit', password_less.regsiter);
-    // event.target.submit();
+    event.target.submit();
   }, error);
 };
 
