@@ -8,13 +8,13 @@ module Concerns
     class AnonymousAccessRequired < StandardError; end
 
     included do
-      helper_method :current_user, :authenticated?
+      helper_method :current_account, :authenticated?
       rescue_from AuthenticationRequired,  with: :authentication_required!
       rescue_from AnonymousAccessRequired, with: :anonymous_access_required!
     end
 
     def authentication_required!(e)
-      redirect_to session_url
+      redirect_to root_url
     end
 
     def anonymous_access_required!(e)
@@ -37,28 +37,28 @@ module Concerns
       raise AnonymousAccessRequired if authenticated?
     end
 
-    def current_user
-      @current_user ||= if session[:authenticated_at].try(:>, SESSION_LIFETIME.ago)
-        current_tenant.users.find_by(id: session[:current_user])
-      elsif session[:current_user].present?
+    def current_account
+      @current_account ||= if session[:authenticated_at].try(:>, SESSION_LIFETIME.ago)
+        Account.find_by(id: session[:current_account])
+      elsif session[:current_account].present?
         unauthenticate!
       end
     end
 
     def authenticated?
-      current_user.present? &&
-      current_user.enabled?
+      current_account.present? &&
+      current_account.enabled?
     end
 
     def authenticate(user)
       refresh_session
-      session[:current_user] = user.id
+      session[:current_account] = user.id
       session[:authenticated_at] = Time.now
     end
 
     def unauthenticate!
       refresh_session
-      @current_user = session[:current_user] = session[:authenticated_at] = nil
+      @current_account = session[:current_account] = session[:authenticated_at] = nil
     end
 
     def refresh_session
@@ -72,7 +72,7 @@ module Concerns
     end
 
     def after_logged_in_endpoint
-      session.delete(:after_logged_in_endpoint) || root_url
+      session.delete(:after_logged_in_endpoint) || account_url
     end
 
     def construct_after_logged_in_endpoint

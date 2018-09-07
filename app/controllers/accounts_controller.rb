@@ -1,4 +1,7 @@
 class AccountsController < ApplicationController
+  before_action :require_authentication, only: :show
+  before_action :require_anonymous_access, only: :create
+
   def show
   end
 
@@ -12,7 +15,7 @@ class AccountsController < ApplicationController
       context.verify! params[:attestation_object]
       account = Account.register_with! context
       authenticate account
-      redirect_to account_url
+      logged_in!
     else
       redirect_to root_url
     end

@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :require_anonymous_access, only: [:new, :create]
+
   def new
     session[:challenge] = SecureRandom.hex 16
   end
@@ -19,9 +21,14 @@ class SessionsController < ApplicationController
       )
       authenticator.update(sign_count: context.sign_count)
       authenticate authenticator.account
-      redirect_to account_url
+      logged_in!
     else
       redirect_to root_url
     end
+  end
+
+  def destroy
+    unauthenticate!
+    redirect_to root_url
   end
 end
