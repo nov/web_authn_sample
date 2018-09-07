@@ -1,4 +1,7 @@
 class AccountsController < ApplicationController
+  def show
+  end
+
   def create
     context = WebAuthn.context_for(
       params[:client_data_json],
@@ -6,20 +9,12 @@ class AccountsController < ApplicationController
       challenge: session.delete(:challenge)
     )
     if context.registration?
-      account = Account.new(
-        email: params[:email],
-        display_name: params[:display_name]
-      )
-      if account.valid?
-        context.verify! params[:attestation_object]
-        account.authenticators.new(
-          credential_id: context.credential_id,
-          public_key_pem: context.public_key.to_pem,
-          sign_count: context.sign_count
-        )
-        account.save!
-      end
+      context.verify! params[:attestation_object]
+      account = Account.register_with! context
+      authenticate account
+      redirect_to account_url
+    else
+      redirect_to root_url
     end
-    redirect_to root_url
   end
 end
