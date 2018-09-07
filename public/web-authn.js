@@ -93,7 +93,7 @@ password_less.authenticate = (event) => {
       assertion.getClientExtensionResults()
     );
     event.target.credential_id.value = __url_safe_b64_encode__(assertion.rawId);
-    event.target.authenticator_data.value = __url_safe_b64_encode__(attestation.response.authenticatorData);
+    event.target.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
     event.target.client_data_json.value = __url_safe_b64_encode__(assertion.response.clientDataJSON);
     event.target.signature.value = __url_safe_b64_encode__(assertion.response.signature);
     event.target.removeEventListener('submit', password_less.authenticate);
