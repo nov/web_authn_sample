@@ -6,7 +6,8 @@ password_less.regsiter = (event) => {
 
   let user = {
     id: new TextEncoder().encode(email.value),
-    name: email.value
+    name: email.value,
+    displayName: display_name.value
   };
 
   let public_key_options = {
