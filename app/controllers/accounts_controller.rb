@@ -13,7 +13,10 @@ class AccountsController < ApplicationController
     )
     if context.registration?
       context.verify! params[:attestation_object]
-      account = Account.register_with! context
+      account = Account.new(
+        email: params[:email],
+        display_name: params[:display_name]
+      ).register_with! context
       authenticate account
       logged_in!
     else
