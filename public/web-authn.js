@@ -29,29 +29,29 @@ password_less.regsiter = (event) => {
 
   navigator.credentials.create({
     publicKey: public_key_options
-  }).then(password_less.registered, error);
-};
-
-password_less.registered = (attestation, event) => {
-  console.info(event);
-  console.info(event.target);
-  console.log('Attestation', attestation);
-  console.log(
-    'attestation.rawId',
-    __url_safe_b64_encode__(attestation.rawId)
-  );
-  console.log(
-    'attestation.response.attestationObject',
-    __url_safe_b64_encode__(attestation.response.attestationObject)
-  );
-  console.log(
-    'attestation.response.clientDataJSON',
-    __url_safe_b64_encode__(attestation.response.clientDataJSON)
-  );
-  console.log(
-    'attestation.getClientExtensionResults()',
-    attestation.getClientExtensionResults()
-  );
+  }).then(() => {
+    console.log('Attestation', attestation);
+    console.log(
+      'attestation.rawId',
+      __url_safe_b64_encode__(attestation.rawId)
+    );
+    console.log(
+      'attestation.response.attestationObject',
+      __url_safe_b64_encode__(attestation.response.attestationObject)
+    );
+    console.log(
+      'attestation.response.clientDataJSON',
+      __url_safe_b64_encode__(attestation.response.clientDataJSON)
+    );
+    console.log(
+      'attestation.getClientExtensionResults()',
+      attestation.getClientExtensionResults()
+    );
+    evernt.target.attestation_object = __url_safe_b64_encode__(attestation.response.attestationObject);
+    evernt.target.client_data_json = __url_safe_b64_encode__(attestation.response.clientDataJSON);
+    evernt.target.removeEventListener('submit', password_less.regsiter);
+    evernt.target.submit();
+  }, error);
 };
 
 password_less.authenticate = (event) => {
@@ -66,37 +66,33 @@ password_less.authenticate = (event) => {
 
   navigator.credentials.get({
     publicKey: public_key_options
-  }).then(password_less.authenticated, error);
-};
-
-password_less.authenticated = (assertion, event) => {
-  console.info(event);
-  console.info(event.target);
-  console.info('assertion', assertion);
-  console.log(
-    'assertion.rawId',
-    __url_safe_b64_encode__(assertion.rawId)
-  );
-  console.log(
-    'assertion.response.authenticatorData',
-    __url_safe_b64_encode__(assertion.response.authenticatorData)
-  );
-  console.log(
-    'assertion.response.clientDataJSON',
-    __url_safe_b64_encode__(assertion.response.clientDataJSON)
-  );
-  console.log(
-    'assertion.response.signature',
-    __url_safe_b64_encode__(assertion.response.signature)
-  );
-  console.log(
-    'assertion.response.userHandle',
-    __url_safe_b64_encode__(assertion.response.userHandle)
-  );
-  console.log(
-    'attestation.getClientExtensionResults()',
-    attestation.getClientExtensionResults()
-  );
+  }).then(() => {
+    console.info('assertion', assertion);
+    console.log(
+      'assertion.rawId',
+      __url_safe_b64_encode__(assertion.rawId)
+    );
+    console.log(
+      'assertion.response.authenticatorData',
+      __url_safe_b64_encode__(assertion.response.authenticatorData)
+    );
+    console.log(
+      'assertion.response.clientDataJSON',
+      __url_safe_b64_encode__(assertion.response.clientDataJSON)
+    );
+    console.log(
+      'assertion.response.signature',
+      __url_safe_b64_encode__(assertion.response.signature)
+    );
+    console.log(
+      'assertion.response.userHandle',
+      __url_safe_b64_encode__(assertion.response.userHandle)
+    );
+    console.log(
+      'attestation.getClientExtensionResults()',
+      attestation.getClientExtensionResults()
+    );
+  }, error);
 };
 
 const error = (reason) => {
