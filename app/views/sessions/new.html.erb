@@ -1,8 +1,13 @@
 <header>
-  <h2>Please Login</h2>
+  <h2>Password-less Login</h2>
 </header>
-<%= form_tag session_path do %>
-  <p style="color: red"><%= flash[:error] %></p>
-  <p><%= email_field_tag :email, params[:email], placeholder: :email %></p>
-  <p><%= submit_tag :login %></p>
+<%= form_tag session_path, id: 'login_form' do %>
+  <p><%= hidden_field_tag :client_data_json %></p>
+  <p><%= hidden_field_tag :authentication_data %></p>
+  <p><%= submit_tag 'Login' %></p>
 <% end %>
+
+<script>
+  const challenge = "<%= session[:challenge] %>";
+  login_form.addEventListener('submit', password_less.authenticate);
+</script>
