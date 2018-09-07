@@ -21,7 +21,7 @@ password_less.regsiter = (event) => {
       name: document.title
     },
     authenticatorSelection: {
-      requireResidentKey: true
+      // requireResidentKey: true
     },
     user: user
   };
