@@ -21,7 +21,7 @@ password_less.regsiter = (event) => {
       name: document.title
     },
     authenticatorSelection: {
-      // requireResidentKey: true
+      // requireResidentKey: true // NOTE: turn-off during debugging
     },
     user: user
   };
@@ -50,7 +50,7 @@ password_less.regsiter = (event) => {
     event.target.attestation_object = __url_safe_b64_encode__(attestation.response.attestationObject);
     event.target.client_data_json = __url_safe_b64_encode__(attestation.response.clientDataJSON);
     event.target.removeEventListener('submit', password_less.regsiter);
-    event.target.submit();
+    // event.target.submit();
   }, error);
 };
 
