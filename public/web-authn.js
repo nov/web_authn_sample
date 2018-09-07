@@ -29,7 +29,7 @@ password_less.regsiter = (event) => {
 
   navigator.credentials.create({
     publicKey: public_key_options
-  }).then(() => {
+  }).then((attestation) => {
     console.log('Attestation', attestation);
     console.log(
       'attestation.rawId',
