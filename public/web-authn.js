@@ -89,8 +89,8 @@ password_less.authenticate = (event) => {
       __url_safe_b64_encode__(assertion.response.userHandle)
     );
     console.log(
-      'attestation.getClientExtensionResults()',
-      attestation.getClientExtensionResults()
+      'assertion.getClientExtensionResults()',
+      assertion.getClientExtensionResults()
     );
     event.target.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
     event.target.client_data_json.value = __url_safe_b64_encode__(assertion.response.clientDataJSON);
