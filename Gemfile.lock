@@ -186,7 +186,7 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    web_authn (0.0.6)
+    web_authn (0.1.0)
       activesupport
       cbor
       cose
