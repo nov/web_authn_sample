@@ -15,14 +15,16 @@
       <section id="main">
         <%= yield %>
       </section>
-      <footer>
+      <footer id="footer">
         <% if authenticated? %>
           <%= form_tag session_path, method: :delete do %>
             <p><%= submit_tag :logout %></p>
           <% end %>
         <% end %>
-        <small>&copy; <%= link_to 'Nov Matake', 'https://matake.jp' %></small> |
-        <%= link_to 'Source Code', 'https://github.com/nov/web_authn_sample' %>
+        <p>
+          <small>&copy; <%= link_to 'Nov Matake', 'https://matake.jp' %></small> |
+          <%= link_to 'Source Code', 'https://github.com/nov/web_authn_sample' %>
+        </p>
       </footer>
     </div>
   </body>
