@@ -1,0 +1,8 @@
+<header>
+  <h2>Please Login</h2>
+</header>
+<%= form_tag session_path do %>
+  <p style="color: red"><%= flash[:error] %></p>
+  <p><%= email_field_tag :email, params[:email], placeholder: :email %></p>
+  <p><%= submit_tag :login %></p>
+<% end %>

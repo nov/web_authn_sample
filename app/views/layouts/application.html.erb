@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>WebAuthnSample</title>
+    <title>WebAuthn Gem Sample</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,19 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div id="wrapper">
+      <h1>WebAuthn Gem Sample</h1>
+      <section id="main">
+        <%= yield %>
+      </section>
+      <footer>
+        <% if authenticated? %>
+          <%= form_tag session_path, method: :delete do %>
+            <p><%= submit_tag :logout %></p>
+          <% end %>
+        <% end %>
+        <small>&copy; Nov</small>
+      </footer>
+    </div>
   </body>
 </html>
