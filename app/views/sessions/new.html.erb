@@ -3,8 +3,8 @@
 </header>
 
 <%= form_tag session_path, id: 'authentication_form' do %>
+  <%= hidden_field_tag :authenticator_data %>
   <%= hidden_field_tag :client_data_json %>
-  <%= hidden_field_tag :authentication_data %>
   <%= hidden_field_tag :signature %>
   <%= hidden_field_tag :credential_id %>
   <p><%= submit_tag 'Login' %></p>
@@ -17,8 +17,8 @@
 </header>
 
 <%= form_tag account_path, id: 'registration_form' do %>
-  <%= hidden_field_tag :client_data_json %>
   <%= hidden_field_tag :attestation_object %>
+  <%= hidden_field_tag :client_data_json %>
   <p><%= email_field_tag :email, params[:email], placeholder: 'email', required: true %>
   <p><%= text_field_tag :display_name, params[:display_name], placeholder: 'Display Name', required: true %>
   <p><%= submit_tag 'Sign-up' %></p>
