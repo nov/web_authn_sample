@@ -1,4 +1,57 @@
+const cose_alg_ECDSA_w_SHA256 = -7;
 const password_less = {};
+
+password_less.regsiter = (event) => {
+  event.preventDefault();
+
+  let user = {
+    id: new TextEncoder().encode(email.value),
+    name: email.value
+  };
+
+  let public_key_options = {
+    challenge: new TextEncoder().encode(challenge),
+    pubKeyCredParams: [{
+      type: 'public-key',
+      alg: cose_alg_ECDSA_w_SHA256
+    }],
+    rp: {
+      id: location.host,
+      name: document.title
+    },
+    authenticatorSelection: {
+      requireResidentKey: true
+    },
+    user: user
+  };
+  console.log('register', public_key_options);
+
+  navigator.credentials.create({
+    publicKey: public_key_options
+  }).then(password_less.registered, error);
+};
+
+password_less.registered = (attestation, event) => {
+  console.info(event);
+  console.info(event.target);
+  console.log('Attestation', attestation);
+  console.log(
+    'attestation.rawId',
+    __url_safe_b64_encode__(attestation.rawId)
+  );
+  console.log(
+    'attestation.response.attestationObject',
+    __url_safe_b64_encode__(attestation.response.attestationObject)
+  );
+  console.log(
+    'attestation.response.clientDataJSON',
+    __url_safe_b64_encode__(attestation.response.clientDataJSON)
+  );
+  console.log(
+    'attestation.getClientExtensionResults()',
+    attestation.getClientExtensionResults()
+  );
+};
 
 password_less.authenticate = (event) => {
   event.preventDefault();
