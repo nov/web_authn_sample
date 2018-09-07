@@ -47,10 +47,10 @@ password_less.regsiter = (event) => {
       'attestation.getClientExtensionResults()',
       attestation.getClientExtensionResults()
     );
-    evernt.target.attestation_object = __url_safe_b64_encode__(attestation.response.attestationObject);
-    evernt.target.client_data_json = __url_safe_b64_encode__(attestation.response.clientDataJSON);
-    evernt.target.removeEventListener('submit', password_less.regsiter);
-    evernt.target.submit();
+    event.target.attestation_object = __url_safe_b64_encode__(attestation.response.attestationObject);
+    event.target.client_data_json = __url_safe_b64_encode__(attestation.response.clientDataJSON);
+    event.target.removeEventListener('submit', password_less.regsiter);
+    event.target.submit();
   }, error);
 };
 
