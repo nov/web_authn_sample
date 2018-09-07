@@ -3,10 +3,10 @@
 </header>
 
 <%= form_tag session_path, id: 'authentication_form' do %>
+  <%= hidden_field_tag :credential_id %>
   <%= hidden_field_tag :authenticator_data %>
   <%= hidden_field_tag :client_data_json %>
   <%= hidden_field_tag :signature %>
-  <%= hidden_field_tag :credential_id %>
   <p><%= submit_tag 'Login' %></p>
 <% end %>
 
