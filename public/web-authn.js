@@ -92,12 +92,12 @@ password_less.authenticate = (event) => {
       'attestation.getClientExtensionResults()',
       attestation.getClientExtensionResults()
     );
-    event.target.authenticator_data.value = __url_safe_b64_encode__(attestation.response.authenticatorData);
-    event.target.client_data_json.value = __url_safe_b64_encode__(attestation.response.clientDataJSON);
-    event.target.signature.value = __url_safe_b64_encode__(attestation.response.signature);
+    event.target.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
+    event.target.client_data_json.value = __url_safe_b64_encode__(assertion.response.clientDataJSON);
+    event.target.signature.value = __url_safe_b64_encode__(assertion.response.signature);
     event.target.credential_id.value = __url_safe_b64_encode__(assertion.rawId);
     event.target.removeEventListener('submit', password_less.register);
-    // event.target.submit();
+    event.target.submit();
   }, error);
 };
 
