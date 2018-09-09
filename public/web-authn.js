@@ -1,7 +1,7 @@
 const cose_alg_ECDSA_w_SHA256 = -7;
 const password_less = {};
 
-password_less.regsiter = (event) => {
+password_less.register = (event) => {
   event.preventDefault();
 
   let user = {
@@ -17,7 +17,7 @@ password_less.regsiter = (event) => {
       alg: cose_alg_ECDSA_w_SHA256
     }],
     rp: {
-      id: location.host,
+      id:   location.host,
       name: document.title
     },
     authenticatorSelection: {
@@ -30,26 +30,9 @@ password_less.regsiter = (event) => {
   navigator.credentials.create({
     publicKey: public_key_options
   }).then((attestation) => {
-    console.log('Attestation', attestation);
-    console.log(
-      'attestation.rawId',
-      __url_safe_b64_encode__(attestation.rawId)
-    );
-    console.log(
-      'attestation.response.attestationObject',
-      __url_safe_b64_encode__(attestation.response.attestationObject)
-    );
-    console.log(
-      'attestation.response.clientDataJSON',
-      __url_safe_b64_encode__(attestation.response.clientDataJSON)
-    );
-    console.log(
-      'attestation.getClientExtensionResults()',
-      attestation.getClientExtensionResults()
-    );
     event.target.attestation_object.value = __url_safe_b64_encode__(attestation.response.attestationObject);
-    event.target.client_data_json.value = __url_safe_b64_encode__(attestation.response.clientDataJSON);
-    event.target.removeEventListener('submit', password_less.regsiter);
+    event.target.client_data_json.value   = __url_safe_b64_encode__(attestation.response.clientDataJSON);
+    event.target.removeEventListener('submit', password_less.register);
     event.target.submit();
   }, error);
 };
@@ -61,41 +44,15 @@ password_less.authenticate = (event) => {
     challenge: new TextEncoder().encode(challenge),
     rpId: location.host
   };
-
-  console.info('authenticate', public_key_options)
+  console.info('authenticate', public_key_options);
 
   navigator.credentials.get({
     publicKey: public_key_options
   }).then((assertion) => {
-    console.info('assertion', assertion);
-    console.log(
-      'assertion.rawId',
-      __url_safe_b64_encode__(assertion.rawId)
-    );
-    console.log(
-      'assertion.response.authenticatorData',
-      __url_safe_b64_encode__(assertion.response.authenticatorData)
-    );
-    console.log(
-      'assertion.response.clientDataJSON',
-      __url_safe_b64_encode__(assertion.response.clientDataJSON)
-    );
-    console.log(
-      'assertion.response.signature',
-      __url_safe_b64_encode__(assertion.response.signature)
-    );
-    console.log(
-      'assertion.response.userHandle',
-      __url_safe_b64_encode__(assertion.response.userHandle)
-    );
-    console.log(
-      'assertion.getClientExtensionResults()',
-      assertion.getClientExtensionResults()
-    );
-    event.target.credential_id.value = __url_safe_b64_encode__(assertion.rawId);
+    event.target.credential_id.value      = __url_safe_b64_encode__(assertion.rawId);
     event.target.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
-    event.target.client_data_json.value = __url_safe_b64_encode__(assertion.response.clientDataJSON);
-    event.target.signature.value = __url_safe_b64_encode__(assertion.response.signature);
+    event.target.client_data_json.value   = __url_safe_b64_encode__(assertion.response.clientDataJSON);
+    event.target.signature.value          = __url_safe_b64_encode__(assertion.response.signature);
     event.target.removeEventListener('submit', password_less.authenticate);
     event.target.submit();
   }, error);
@@ -103,11 +60,11 @@ password_less.authenticate = (event) => {
 
 const error = (reason) => {
   console.log('error', reason);
-}
+};
 
-const __url_safe_b64_encode__ = (array_buffer) => {
-  let uint8_array = new Uint8Array(array_buffer).reduce(
-    (s, byte) => s + String.fromCharCode(byte), ''
-  );
-  return btoa(uint8_array).replace(/\//g, '_').replace(/\+/g, '-').replace(/=/g, '');
+const __url_safe_b64_encode__ = (buffer) => {
+  return buffer.toString('base64')
+    .replace(/\//g, '_')
+    .replace(/\+/g, '-')
+    .replace(/=/g, '');
 };
