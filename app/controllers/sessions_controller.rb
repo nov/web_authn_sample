@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
       authenticator = Authenticator.find_by!(credential_id: params[:credential_id])
       context.verify!(
         params[:authenticator_data],
-        public_key: authenticator.public_key,
+        public_cose_key: authenticator.public_cose_key,
         sign_count: authenticator.sign_count,
         signature: params[:signature]
       )

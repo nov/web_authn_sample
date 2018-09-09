@@ -7,7 +7,7 @@ class Account < ApplicationRecord
   def register_with!(authenticator)
     authenticators.new(
       credential_id: authenticator.credential_id,
-      public_key_pem: authenticator.public_key.to_pem,
+      public_cose_key_cbor: authenticator.public_cose_key.raw,
       sign_count: authenticator.sign_count
     )
     save!
