@@ -73,7 +73,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
-    cose-key (0.0.4)
+    cose-key (0.1.0)
       cbor
     crass (1.0.4)
     erubi (1.7.1)
@@ -186,7 +186,7 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    web_authn (0.2.1)
+    web_authn (0.2.2)
       activesupport
       cbor
       cose-key
