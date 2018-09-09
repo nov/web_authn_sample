@@ -62,9 +62,9 @@ const error = (reason) => {
   console.log('error', reason);
 };
 
-const __url_safe_b64_encode__ = (buffer) => {
-  return buffer.toString('base64')
-    .replace(/\//g, '_')
-    .replace(/\+/g, '-')
-    .replace(/=/g, '');
+const __url_safe_b64_encode__ = (array_buffer) => {
+  let uint8_array = new Uint8Array(array_buffer).reduce(
+    (s, byte) => s + String.fromCharCode(byte), ''
+  );
+  return btoa(uint8_array).replace(/\//g, '_').replace(/\+/g, '-').replace(/=/g, '');
 };
