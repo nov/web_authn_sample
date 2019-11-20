@@ -20,9 +20,9 @@ password_less.register = (event) => {
       id:   location.host,
       name: document.title
     },
-    authenticatorSelection: {
-      requireResidentKey: true
-    },
+    // authenticatorSelection: {
+    //   requireResidentKey: true
+    // },
     user: user
   };
   console.log('register', public_key_options);
