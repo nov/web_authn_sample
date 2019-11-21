@@ -25,7 +25,8 @@ password_less.register = (event) => {
       // requireResidentKey: true,
       // userVerification: 'discouraged',
     },
-    user: user
+    user: user,
+    attestation: 'direct'
   };
   console.log('register', public_key_options);
 
