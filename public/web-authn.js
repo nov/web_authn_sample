@@ -21,12 +21,12 @@ password_less.register = (event) => {
       name: document.title
     },
     authenticatorSelection: {
-      authenticatorAttachment: 'platform',
+      // authenticatorAttachment: 'platform',
       // requireResidentKey: true,
       // userVerification: 'discouraged',
     },
     user: user,
-    attestation: 'direct'
+    // attestation: 'direct'
   };
   console.log('register', public_key_options);
 
