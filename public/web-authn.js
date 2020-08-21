@@ -26,7 +26,7 @@ password_less.register = (event) => {
       // userVerification: 'discouraged',
     },
     user: user,
-    // attestation: 'direct'
+    attestation: 'direct'
   };
   console.log('register', public_key_options);
 
