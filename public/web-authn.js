@@ -21,8 +21,8 @@ password_less.register = (event) => {
       name: document.title
     },
     authenticatorSelection: {
-      // authenticatorAttachment: 'platform',
-      // requireResidentKey: true,
+      authenticatorAttachment: 'platform',
+      requireResidentKey: true,
       // userVerification: 'discouraged',
     },
     user: user,
