@@ -23,7 +23,7 @@ password_less.register = (event) => {
     authenticatorSelection: {
       authenticatorAttachment: 'platform',
       requireResidentKey: true,
-      // userVerification: 'discouraged',
+      userVerification: 'required',
     },
     user: user,
     // attestation: 'direct'
