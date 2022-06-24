@@ -38,9 +38,10 @@ password_less.register = (event) => {
   }).then((attestation) => {
     event.target.attestation_object.value = __url_safe_b64_encode__(attestation.response.attestationObject);
     event.target.client_data_json.value   = __url_safe_b64_encode__(attestation.response.clientDataJSON);
-    // event.target.removeEventListener('submit', password_less.register);
     event.target.submit();
-  }, error);
+  }, error).finally(() => {
+    event.target.commit.disabled = false;
+  });
 };
 
 password_less.authenticate = (event) => {
@@ -60,9 +61,10 @@ password_less.authenticate = (event) => {
     event.target.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
     event.target.client_data_json.value   = __url_safe_b64_encode__(assertion.response.clientDataJSON);
     event.target.signature.value          = __url_safe_b64_encode__(assertion.response.signature);
-    // event.target.removeEventListener('submit', password_less.authenticate);
     event.target.submit();
-  }, error);
+  }, error).finally(() => {
+    event.target.commit.disabled = false;
+  });
 };
 
 password_less.autocomplete = (form) => {
@@ -82,10 +84,11 @@ password_less.autocomplete = (form) => {
     form.client_data_json.value   = __url_safe_b64_encode__(assertion.response.clientDataJSON);
     form.signature.value          = __url_safe_b64_encode__(assertion.response.signature);
     form.submit();
-  }, error);;
+  }, error)
 };
 
 const error = (reason) => {
+  document.reason = reason
   console.log('error', reason);
 };
 
