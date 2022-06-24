@@ -64,6 +64,26 @@ password_less.authenticate = (event) => {
   }, error);
 };
 
+password_less.autocomplete = (form) => {
+  let public_key_options = {
+    challenge: new TextEncoder().encode(challenge),
+    rpId: location.host,
+  };
+  console.info('activate autocomplete', public_key_options);
+
+  navigator.credentials.get({
+    mediation: 'conditional',
+    publicKey: public_key_options
+  }).then((assertion) => {
+    form.credential_id.value      = __url_safe_b64_encode__(assertion.rawId);
+    form.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
+    form.client_data_json.value   = __url_safe_b64_encode__(assertion.response.clientDataJSON);
+    form.signature.value          = __url_safe_b64_encode__(assertion.response.signature);
+    form.removeEventListener('submit', password_less.authenticate);
+    form.submit();
+  }, error);;
+};
+
 const error = (reason) => {
   console.log('error', reason);
 };
