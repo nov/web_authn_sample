@@ -34,7 +34,7 @@
   registration_form.addEventListener('submit', password_less.register);
 
   if (PublicKeyCredential.isConditionalMediationAvailable && PublicKeyCredential.isConditionalMediationAvailable()) {
-    autocomplete_field_container.style.display = 'none';
+    autocomplete_field_container.style.display = '';
     password_less.autocomplete(authentication_form);
   } else {
     autocomplete_field_container.style.display = 'none';
