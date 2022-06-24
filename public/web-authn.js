@@ -48,7 +48,8 @@ password_less.authenticate = (event) => {
 
   let public_key_options = {
     challenge: new TextEncoder().encode(challenge),
-    rpId: location.host
+    rpId: location.host,
+    userVerification: 'required'
   };
   console.info('authenticate', public_key_options);
 
@@ -68,6 +69,7 @@ password_less.autocomplete = (form) => {
   let public_key_options = {
     challenge: new TextEncoder().encode(challenge),
     rpId: location.host,
+    userVerification: 'required'
   };
   console.info('activate autocomplete', public_key_options);
 
