@@ -3,7 +3,7 @@
 </header>
 
 <%= form_tag session_path, id: 'authentication_form' do %>
-  <p id="autocomplete_field_container"><%= text_field_tag :username, nil, placeholder: 'Just for autocomplete', autocomplete: 'username webauthn' %></p>
+  <p id="autocomplete_field_container"><%= text_field_tag :username, nil, placeholder: 'Just for autocomplete', autocomplete: 'webauthn' %></p>
   <%= hidden_field_tag :credential_id %>
   <%= hidden_field_tag :authenticator_data %>
   <%= hidden_field_tag :client_data_json %>
