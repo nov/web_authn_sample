@@ -1,4 +1,3 @@
-const cose_alg_ECDSA_w_SHA256 = -7;
 const password_less = {};
 
 password_less.register = (event) => {
@@ -12,21 +11,16 @@ password_less.register = (event) => {
 
   let public_key_options = {
     challenge: new TextEncoder().encode(challenge),
-    pubKeyCredParams: [{
-      type: 'public-key',
-      alg: cose_alg_ECDSA_w_SHA256
-    }],
     rp: {
       id:   location.host,
       name: document.title
     },
     authenticatorSelection: {
       authenticatorAttachment: 'platform',
-      requireResidentKey: true,
+      residentKey: 'preferred',
       userVerification: 'required',
     },
-    user: user,
-    // attestation: 'direct'
+    user: user
   };
   console.log('register', public_key_options);
 
