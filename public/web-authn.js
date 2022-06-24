@@ -1,4 +1,5 @@
-const cose_alg_ECDSA_w_SHA256 = -7;
+const cose_alg_ES256 = -7;
+const cose_alg_RS256 = -257;
 const password_less = {};
 
 password_less.register = (event) => {
@@ -18,7 +19,10 @@ password_less.register = (event) => {
     },
     pubKeyCredParams: [{
       type: 'public-key',
-      alg: cose_alg_ECDSA_w_SHA256
+      alg: cose_alg_ES256
+    }, {
+      type: 'public-key',
+      alg: cose_alg_RS256
     }],
     authenticatorSelection: {
       authenticatorAttachment: 'platform',
