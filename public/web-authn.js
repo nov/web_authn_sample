@@ -64,7 +64,7 @@ password_less.authenticate = (event) => {
   }, error);
 };
 
-password_less.autocomplete = (event) => {
+password_less.autocomplete = (form) => {
   let public_key_options = {
     challenge: new TextEncoder().encode(challenge),
     rpId: location.host,
@@ -75,14 +75,11 @@ password_less.autocomplete = (event) => {
     mediation: 'conditional',
     publicKey: public_key_options
   }).then((assertion) => {
-    console.info(event.target);
-    console.info(event.target.form);
-
-    event.target.form.credential_id.value      = __url_safe_b64_encode__(assertion.rawId);
-    event.target.form.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
-    event.target.form.client_data_json.value   = __url_safe_b64_encode__(assertion.response.clientDataJSON);
-    event.target.form.signature.value          = __url_safe_b64_encode__(assertion.response.signature);
-    event.target.form.submit();
+    form.credential_id.value      = __url_safe_b64_encode__(assertion.rawId);
+    form.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
+    form.client_data_json.value   = __url_safe_b64_encode__(assertion.response.clientDataJSON);
+    form.signature.value          = __url_safe_b64_encode__(assertion.response.signature);
+    form.submit();
   }, error);;
 };
 

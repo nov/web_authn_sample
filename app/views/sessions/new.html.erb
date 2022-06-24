@@ -37,7 +37,7 @@
 
   if (PublicKeyCredential.isConditionalMediationAvailable && PublicKeyCredential.isConditionalMediationAvailable()) {
     autocomplete_field_container.style.display = '';
-    username.addEventListener('focus', password_less.autocomplete);
+    password_less.autocomplete(authentication_form);
   } else {
     autocomplete_field_container.style.display = 'none';
   }
