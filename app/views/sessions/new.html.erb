@@ -3,7 +3,9 @@
 </header>
 
 <%= form_tag session_path, id: 'authentication_form' do %>
-  <p id="autocomplete_field_container"><%= text_field_tag :username, nil, placeholder: 'Just for autocomplete', autocomplete: 'webauthn' %></p>
+  <p id="autocomplete_field_container">
+    <%= text_field_tag :username, nil, placeholder: 'Just for autocomplete', autocomplete: 'webauthn', autofocus: true %>
+  </p>
   <%= hidden_field_tag :credential_id %>
   <%= hidden_field_tag :authenticator_data %>
   <%= hidden_field_tag :client_data_json %>
@@ -35,7 +37,7 @@
 
   if (PublicKeyCredential.isConditionalMediationAvailable && PublicKeyCredential.isConditionalMediationAvailable()) {
     autocomplete_field_container.style.display = '';
-    password_less.autocomplete(authentication_form);
+    username.addEventListener('focus', password_less.autocomplete);
   } else {
     autocomplete_field_container.style.display = 'none';
   }
