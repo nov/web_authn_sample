@@ -30,7 +30,7 @@
 <% end %>
 
 <script src="/web-authn.js"></script>
-<script>
+<script async>
   const challenge = "<%= session[:challenge] %>";
   authentication_form.addEventListener('submit', password_less.authenticate);
   registration_form.addEventListener('submit', password_less.register);
