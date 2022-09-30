@@ -3,7 +3,7 @@
 </header>
 
 <%= form_tag session_path, id: 'authentication_form' do %>
-  <p id="autocomplete_field_container">
+  <p id="autocomplete_field_container" style="display:none">
     <%= text_field_tag :username, nil, placeholder: 'Just for autocomplete', autocomplete: 'username webauthn' %>
   </p>
   <%= hidden_field_tag :credential_id %>
@@ -35,13 +35,11 @@
   authentication_form.addEventListener('submit', password_less.authenticate);
   registration_form.addEventListener('submit', password_less.register);
 
-  if (
-    PublicKeyCredential.isConditionalMediationAvailable && await PublicKeyCredential.isConditionalMediationAvailable() || // Safari
-    navigator.credentials.conditionalMediationSupported // Chrome Canary
-  ) {
-    autocomplete_field_container.style.display = '';
-    password_less.autocomplete(authentication_form);
-  } else {
-    autocomplete_field_container.style.display = 'none';
+  if (PublicKeyCredential.isConditionalMediationAvailable) {
+    let available = await PublicKeyCredential.isConditionalMediationAvailable();
+    if (available) {
+      autocomplete_field_container.style.display = '';
+      password_less.autocomplete(authentication_form);
+    }
   }
 </script>
