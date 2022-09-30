@@ -36,7 +36,7 @@
   registration_form.addEventListener('submit', password_less.register);
 
   if (
-    PublicKeyCredential.isConditionalMediationAvailable && PublicKeyCredential.isConditionalMediationAvailable() || // Safari
+    PublicKeyCredential.isConditionalMediationAvailable && await PublicKeyCredential.isConditionalMediationAvailable() || // Safari
     navigator.credentials.conditionalMediationSupported // Chrome Canary
   ) {
     autocomplete_field_container.style.display = '';
