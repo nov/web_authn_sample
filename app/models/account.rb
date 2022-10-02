@@ -1,5 +1,5 @@
 class Account < ApplicationRecord
-  has_many :authenticators
+  has_many :authenticators, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true
   validates :display_name, presence: true
