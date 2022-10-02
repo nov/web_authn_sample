@@ -130,6 +130,8 @@ GEM
     mini_portile2 (2.8.0)
     minitest (5.16.3)
     msgpack (1.6.0)
+    net-imap (0.3.1)
+      net-protocol
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.1.2)
@@ -253,6 +255,7 @@ DEPENDENCIES
   coffee-rails (~> 5.0)
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
+  net-imap
   net-pop
   net-smtp
   pg
