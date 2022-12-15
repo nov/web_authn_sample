@@ -2,14 +2,11 @@ databases:
   - name: render
     databaseName: render
     user: render
-    region: oregon
 
 services:
   - type: web
     name: web-authn
     env: ruby
-    region: oregon
-    plan: free
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
