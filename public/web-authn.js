@@ -1,6 +1,8 @@
 const cose_alg_ES256 = -7;
 const cose_alg_RS256 = -257;
 const password_less = {};
+const authAbortController = new AbortController();
+const authAbortSignal = authAbortController.signal;
 
 password_less.register = (event) => {
   event.preventDefault();
@@ -77,7 +79,8 @@ password_less.autocomplete = (form) => {
 
   navigator.credentials.get({
     mediation: 'conditional',
-    publicKey: public_key_options
+    publicKey: public_key_options,
+    signal: authAbortSignal
   }).then((assertion) => {
     form.credential_id.value      = __url_safe_b64_encode__(assertion.rawId);
     form.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
