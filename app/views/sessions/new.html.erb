@@ -7,7 +7,7 @@
   <%= hidden_field_tag :authenticator_data %>
   <%= hidden_field_tag :client_data_json %>
   <%= hidden_field_tag :signature %>
-  <p><%= text_field_tag :username, nil, placeholder: 'Just for autocomplete', autocomplete: 'webauthn' %></p>
+  <p><%= text_field_tag :webauthn, nil, placeholder: 'Just for autocomplete', autocomplete: 'username webauthn' %></p>
   <p><%= submit_tag 'Login' %></p>
 <% end %>
 
@@ -26,32 +26,36 @@
   <p><%= submit_tag 'Sign-up' %></p>
 <% end %>
 
-<div id="autocreate_form_container" style="display:none">
-  <p class="avatar">
-    <span>or</span>
-  </p>
+<p class="avatar">
+  <span>or</span>
+</p>
 
-  <header>
-    <h2>Autofill-based Sign-up</h2>
-  </header>
+<header>
+  <h2>Autofill-based Sign-up</h2>
+</header>
 
-  <%= form_tag session_path, id: 'password_form' do %>
-    <p><%= text_field_tag :username, nil, placeholder: 'username', autocomplete: 'username' %></p>
-    <p><%= password_field_tag :password, nil, placeholder: 'password', autocomplete: 'password' %></p>
-    <p><%= submit_tag 'Login' %></p>
-  <% end %>
-</div>
+<%= form_tag session_path, id: 'password_form' do %>
+  <p><%= text_field_tag :username, nil, placeholder: 'username', autocomplete: 'username' %></p>
+  <p><%= password_field_tag :password, nil, placeholder: 'password', autocomplete: 'password' %></p>
+  <p><%= submit_tag 'Login' %></p>
+<% end %>
 
 <script src="/web-authn.js"></script>
 <script>
   const challenge = "<%= session[:challenge] %>";
+
   authentication_form.addEventListener('submit', password_less.authenticate);
   registration_form.addEventListener('submit', password_less.register);
-  password_less.autocomplete(authentication_form);
 
   PublicKeyCredential.getClientCapabilities().then((capability) => {
+    if (capability.conditionalMediation) {
+      password_less.autocomplete(authentication_form);
+    } else {
+      console.info('conditional mediation unavailable');
+    }
+
+
     if (capability.conditionalCreate) {
-      autocreate_form_container.style.display = '';
       password_form.addEventListener('submit', password_less.autocreate);
     } else {
       console.info('conditional creation unavailable');

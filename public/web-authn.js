@@ -15,7 +15,6 @@ password_less.register = (event) => {
   let public_key_options = {
     challenge: new TextEncoder().encode(challenge),
     rp: {
-      id:   location.host,
       name: document.title
     },
     pubKeyCredParams: [{
@@ -57,7 +56,6 @@ password_less.autocreate = (event) => {
   let public_key_options = {
     challenge: new TextEncoder().encode(challenge),
     rp: {
-      id:   location.host,
       name: document.title
     },
     pubKeyCredParams: [{
@@ -84,7 +82,6 @@ password_less.authenticate = (event) => {
 
   let public_key_options = {
     challenge: new TextEncoder().encode(challenge),
-    rpId: location.host,
     userVerification: 'required'
   };
   console.info('authenticate', public_key_options);
@@ -105,7 +102,6 @@ password_less.authenticate = (event) => {
 password_less.autocomplete = (form) => {
   let public_key_options = {
     challenge: new TextEncoder().encode(challenge),
-    rpId: location.host,
     userVerification: 'required'
   };
   console.info('activate autocomplete', public_key_options);
@@ -123,7 +119,8 @@ password_less.autocomplete = (form) => {
 };
 
 const error = (reason) => {
-  document.reason = reason
+  document.reason = reason;
+  alert(reason);
   console.log('error', reason);
 };
 
