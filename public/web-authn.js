@@ -5,12 +5,12 @@ const authAbortController = new AbortController();
 const authAbortSignal = authAbortController.signal;
 
 password_less.register = (event) => {
-  event.preventDefault();
+  event?.preventDefault();
 
   let user = {
     id: new TextEncoder().encode(email.value),
     name: email.value,
-    displayName: display_name.value
+    displayName: email.value
   };
 
   let public_key_options = {
@@ -38,6 +38,7 @@ password_less.register = (event) => {
   navigator.credentials.create({
     publicKey: public_key_options
   }).then((attestation) => {
+    console.log('attestation', attestation);
     event.target.attestation_object.value = __url_safe_b64_encode__(attestation.response.attestationObject);
     event.target.client_data_json.value   = __url_safe_b64_encode__(attestation.response.clientDataJSON);
     event.target.submit();
@@ -46,8 +47,42 @@ password_less.register = (event) => {
   });
 };
 
+password_less.autocreate = (event) => {
+  event?.preventDefault();
+
+  let user = {
+    id: new TextEncoder().encode(username.value),
+    name: username.value,
+    displayName: username.value
+  };
+
+  let public_key_options = {
+    challenge: new TextEncoder().encode(challenge),
+    rp: {
+      id:   location.host,
+      name: document.title
+    },
+    pubKeyCredParams: [{
+      type: 'public-key',
+      alg: cose_alg_ES256
+    }, {
+      type: 'public-key',
+      alg: cose_alg_RS256
+    }],
+    user: user
+  };
+  console.log('autocreate', public_key_options);
+
+  navigator.credentials.create({
+    mediation: 'conditional',
+    publicKey: public_key_options
+  }).then((attestation) => {
+    console.log('attestation', attestation);
+  }, error);
+}
+
 password_less.authenticate = (event) => {
-  event.preventDefault();
+  event?.preventDefault();
 
   let public_key_options = {
     challenge: new TextEncoder().encode(challenge),
@@ -59,6 +94,7 @@ password_less.authenticate = (event) => {
   navigator.credentials.get({
     publicKey: public_key_options
   }).then((assertion) => {
+    console.log('assertion', assertion);
     event.target.credential_id.value      = __url_safe_b64_encode__(assertion.rawId);
     event.target.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
     event.target.client_data_json.value   = __url_safe_b64_encode__(assertion.response.clientDataJSON);
@@ -82,12 +118,13 @@ password_less.autocomplete = (form) => {
     publicKey: public_key_options,
     signal: authAbortSignal
   }).then((assertion) => {
+    console.log('assertion', assertion);
     form.credential_id.value      = __url_safe_b64_encode__(assertion.rawId);
     form.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
     form.client_data_json.value   = __url_safe_b64_encode__(assertion.response.clientDataJSON);
     form.signature.value          = __url_safe_b64_encode__(assertion.response.signature);
     form.submit();
-  }, error)
+  }, error);
 };
 
 const error = (reason) => {
