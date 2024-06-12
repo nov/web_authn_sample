@@ -2,7 +2,6 @@ class Account < ApplicationRecord
   has_many :authenticators, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true
-  validates :display_name, presence: true
 
   def register_with!(authenticator)
     authenticators.new(

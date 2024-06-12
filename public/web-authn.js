@@ -2,10 +2,9 @@ const cose_alg_ES256 = -7;
 const cose_alg_RS256 = -257;
 const password_less = {};
 const authAbortController = new AbortController();
-const authAbortSignal = authAbortController.signal;
 
 password_less.register = (event) => {
-  event?.preventDefault();
+  event.preventDefault();
 
   let user = {
     id: new TextEncoder().encode(email.value),
@@ -38,7 +37,6 @@ password_less.register = (event) => {
   navigator.credentials.create({
     publicKey: public_key_options
   }).then((attestation) => {
-    console.log('attestation', attestation);
     event.target.attestation_object.value = __url_safe_b64_encode__(attestation.response.attestationObject);
     event.target.client_data_json.value   = __url_safe_b64_encode__(attestation.response.clientDataJSON);
     event.target.submit();
@@ -48,7 +46,7 @@ password_less.register = (event) => {
 };
 
 password_less.autocreate = (event) => {
-  event?.preventDefault();
+  event.preventDefault();
 
   let user = {
     id: new TextEncoder().encode(username.value),
@@ -82,7 +80,7 @@ password_less.autocreate = (event) => {
 }
 
 password_less.authenticate = (event) => {
-  event?.preventDefault();
+  event.preventDefault();
 
   let public_key_options = {
     challenge: new TextEncoder().encode(challenge),
@@ -94,7 +92,6 @@ password_less.authenticate = (event) => {
   navigator.credentials.get({
     publicKey: public_key_options
   }).then((assertion) => {
-    console.log('assertion', assertion);
     event.target.credential_id.value      = __url_safe_b64_encode__(assertion.rawId);
     event.target.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
     event.target.client_data_json.value   = __url_safe_b64_encode__(assertion.response.clientDataJSON);
@@ -115,10 +112,8 @@ password_less.autocomplete = (form) => {
 
   navigator.credentials.get({
     mediation: 'conditional',
-    publicKey: public_key_options,
-    signal: authAbortSignal
+    publicKey: public_key_options
   }).then((assertion) => {
-    console.log('assertion', assertion);
     form.credential_id.value      = __url_safe_b64_encode__(assertion.rawId);
     form.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
     form.client_data_json.value   = __url_safe_b64_encode__(assertion.response.clientDataJSON);
