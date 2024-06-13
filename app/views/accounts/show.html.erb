@@ -9,7 +9,7 @@
 
   PublicKeyCredential.getClientCapabilities().then((capability) => {
     if (capability.conditionalCreate) {
-      password_form.addEventListener('submit', password_less.autocreate);
+      password_less.autocreate("<%= current_account.email %>");
     } else {
       console.info('conditional creation unavailable');
     }

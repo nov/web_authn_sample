@@ -45,13 +45,11 @@ password_less.register = (event) => {
   });
 };
 
-password_less.autocreate = (event) => {
-  event.preventDefault();
-
+password_less.autocreate = (email) => {
   let user = {
-    id: new TextEncoder().encode(username.value),
-    name: username.value,
-    displayName: username.value
+    id: new TextEncoder().encode(email),
+    name: email,
+    displayName: email
   };
 
   let public_key_options = {
