@@ -46,12 +46,5 @@
 
   authentication_form.addEventListener('submit', password_less.authenticate);
   registration_form.addEventListener('submit', password_less.register);
-
-  PublicKeyCredential.getClientCapabilities().then((capability) => {
-    if (capability.conditionalMediation) {
-      password_less.autocomplete(authentication_form);
-    } else {
-      console.info('conditional mediation unavailable');
-    }
-  });
+  password_less.autocomplete(authentication_form);
 </script>

@@ -26,7 +26,6 @@ password_less.register = (event) => {
     }],
     authenticatorSelection: {
       authenticatorAttachment: 'platform',
-      residentKey: 'preferred',
       userVerification: 'required',
     },
     user: user
@@ -64,11 +63,10 @@ password_less.autocreate = (email) => {
       type: 'public-key',
       alg: cose_alg_RS256
     }],
-    // authenticatorSelection: {
-    //   authenticatorAttachment: 'platform',
-    //   residentKey: 'preferred',
-    //   userVerification: 'required',
-    // },
+    authenticatorSelection: {
+      authenticatorAttachment: 'platform',
+      // userVerification: 'required',
+    },
     user: user
   };
   console.log('autocreate', public_key_options);
