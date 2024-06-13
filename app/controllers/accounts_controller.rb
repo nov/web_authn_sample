@@ -3,6 +3,7 @@ class AccountsController < ApplicationController
   before_action :require_anonymous_access, only: :create
 
   def show
+    session[:challenge] = SecureRandom.hex 16
   end
 
   def create
