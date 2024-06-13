@@ -36,6 +36,7 @@ password_less.register = (event) => {
   navigator.credentials.create({
     publicKey: public_key_options
   }).then((attestation) => {
+    console.log('register succeeded', attestation);
     event.target.attestation_object.value = __url_safe_b64_encode__(attestation.response.attestationObject);
     event.target.client_data_json.value   = __url_safe_b64_encode__(attestation.response.clientDataJSON);
     event.target.submit();
@@ -65,6 +66,11 @@ password_less.autocreate = (event) => {
       type: 'public-key',
       alg: cose_alg_RS256
     }],
+    // authenticatorSelection: {
+    //   authenticatorAttachment: 'platform',
+    //   residentKey: 'preferred',
+    //   userVerification: 'required',
+    // },
     user: user
   };
   console.log('autocreate', public_key_options);
@@ -73,7 +79,7 @@ password_less.autocreate = (event) => {
     mediation: 'conditional',
     publicKey: public_key_options
   }).then((attestation) => {
-    console.log('attestation', attestation);
+    console.log('autocreate succeeded', attestation);
   }, error);
 }
 
@@ -89,6 +95,7 @@ password_less.authenticate = (event) => {
   navigator.credentials.get({
     publicKey: public_key_options
   }).then((assertion) => {
+    console.log('authenticate succeeded', assertion);
     event.target.credential_id.value      = __url_safe_b64_encode__(assertion.rawId);
     event.target.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
     event.target.client_data_json.value   = __url_safe_b64_encode__(assertion.response.clientDataJSON);
@@ -110,6 +117,7 @@ password_less.autocomplete = (form) => {
     mediation: 'conditional',
     publicKey: public_key_options
   }).then((assertion) => {
+    console.log('autocomplete succeeded', assertion);
     form.credential_id.value      = __url_safe_b64_encode__(assertion.rawId);
     form.authenticator_data.value = __url_safe_b64_encode__(assertion.response.authenticatorData);
     form.client_data_json.value   = __url_safe_b64_encode__(assertion.response.clientDataJSON);
