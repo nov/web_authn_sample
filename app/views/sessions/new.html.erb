@@ -31,7 +31,7 @@
 </p>
 
 <header>
-  <h2>Autofill-based Sign-up</h2>
+  <h2>Passkey Upgrade</h2>
 </header>
 
 <%= form_tag session_path, id: 'password_form' do %>
@@ -52,13 +52,6 @@
       password_less.autocomplete(authentication_form);
     } else {
       console.info('conditional mediation unavailable');
-    }
-
-
-    if (capability.conditionalCreate) {
-      password_form.addEventListener('submit', password_less.autocreate);
-    } else {
-      console.info('conditional creation unavailable');
     }
   });
 </script>

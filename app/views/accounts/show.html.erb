@@ -2,3 +2,16 @@
   <h2>Account Dashboard</h2>
 </header>
 <p>Hi, <%= current_account.email %>!</p>
+
+<script src="/web-authn.js"></script>
+<script>
+  const challenge = "<%= session[:challenge] %>";
+
+  PublicKeyCredential.getClientCapabilities().then((capability) => {
+    if (capability.conditionalCreate) {
+      password_form.addEventListener('submit', password_less.autocreate);
+    } else {
+      console.info('conditional creation unavailable');
+    }
+  });
+</script>
