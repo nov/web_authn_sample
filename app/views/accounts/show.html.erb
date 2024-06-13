@@ -3,6 +3,11 @@
 </header>
 <p>Hi, <%= current_account.email %>!</p>
 
+<%= form_tag account_path, method: :put, id: 'binding_form' do %>
+  <%= hidden_field_tag :attestation_object %>
+  <%= hidden_field_tag :client_data_json %>
+<% end %>
+
 <script src="/web-authn.js"></script>
 <script>
   const challenge = "<%= session[:challenge] %>";

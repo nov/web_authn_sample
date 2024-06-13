@@ -12,4 +12,13 @@ class Account < ApplicationRecord
     save!
     self
   end
+
+  def bind_with!(authenticator)
+    authenticators.create!(
+      credential_id: authenticator.credential_id,
+      public_cose_key_cbor: authenticator.public_cose_key.raw,
+      sign_count: authenticator.sign_count
+    )
+    self
+  end
 end

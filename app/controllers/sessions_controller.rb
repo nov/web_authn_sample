@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
   def create
     if params[:username]
-      authenticate Account.find_by!(email: params[:username])
+      authenticate Account.find_or_create_by!(email: params[:username])
       logged_in!
     else
       context = WebAuthn.context_for(

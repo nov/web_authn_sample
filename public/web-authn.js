@@ -65,7 +65,7 @@ password_less.autocreate = (email) => {
     }],
     authenticatorSelection: {
       authenticatorAttachment: 'platform',
-      // userVerification: 'required',
+      userVerification: 'required',
     },
     user: user
   };
@@ -76,6 +76,9 @@ password_less.autocreate = (email) => {
     publicKey: public_key_options
   }).then((attestation) => {
     console.log('autocreate succeeded', attestation);
+    binding_form.attestation_object.value = __url_safe_b64_encode__(attestation.response.attestationObject);
+    binding_form.client_data_json.value   = __url_safe_b64_encode__(attestation.response.clientDataJSON);
+    binding_form.submit();
   }, error);
 }
 

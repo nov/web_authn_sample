@@ -1,5 +1,5 @@
 <header>
-  <h2>Password-less Login</h2>
+  <h2>Passkey Autofill</h2>
 </header>
 
 <%= form_tag session_path, id: 'authentication_form' do %>
@@ -7,10 +7,12 @@
   <%= hidden_field_tag :authenticator_data %>
   <%= hidden_field_tag :client_data_json %>
   <%= hidden_field_tag :signature %>
-  <p><%= text_field_tag :webauthn, nil, placeholder: 'Just for autocomplete', autocomplete: 'username webauthn' %></p>
-  <p><%= submit_tag 'Login' %></p>
+  <p><%= text_field_tag :user_id, nil, placeholder: 'autofill only', autocomplete: 'webauthn' %></p>
 <% end %>
 
+<%
+=begin
+%>
 <p class="avatar">
   <span>or</span>
 </p>
@@ -25,6 +27,9 @@
   <p><%= email_field_tag :email, params[:email], placeholder: 'email', required: true %>
   <p><%= submit_tag 'Sign-up' %></p>
 <% end %>
+<%
+=end
+%>
 
 <p class="avatar">
   <span>or</span>
@@ -44,7 +49,7 @@
 <script>
   const challenge = "<%= session[:challenge] %>";
 
-  authentication_form.addEventListener('submit', password_less.authenticate);
-  registration_form.addEventListener('submit', password_less.register);
+  // authentication_form.addEventListener('submit', password_less.authenticate);
+  // registration_form.addEventListener('submit', password_less.register);
   password_less.autocomplete(authentication_form);
 </script>
