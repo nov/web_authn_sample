@@ -6,10 +6,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if params[:username]
-      authenticate Account.find_or_create_by!(email: params[:username])
-      logged_in!
-    else
+    if params[:authenticator_data].present?
       context = WebAuthn.context_for(
         params[:client_data_json],
         origin: request.base_url,
@@ -26,10 +23,12 @@ class SessionsController < ApplicationController
         authenticator.update(sign_count: context.sign_count)
         authenticate authenticator.account
         logged_in!
-      else
-        redirect_to root_url
       end
+    elsif params[:username].present?
+      authenticate Account.find_or_create_by!(email: params[:username])
+      logged_in!
     end
+    redirect_to root_url
   end
 
   def destroy
