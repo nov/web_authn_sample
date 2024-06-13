@@ -10,9 +10,8 @@ class SessionsController < ApplicationController
       authenticate_by_passkey
     elsif params[:username].present?
       authenticate Account.find_or_create_by!(email: params[:username])
-      logged_in!
     end
-    redirect_to root_url
+    logged_in!
   end
 
   def destroy
@@ -38,7 +37,6 @@ class SessionsController < ApplicationController
       )
       authenticator.update(sign_count: context.sign_count)
       authenticate authenticator.account
-      logged_in!
     end
   end
 end
