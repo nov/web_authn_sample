@@ -1,3 +1,7 @@
+<%
+=begin
+%>
+
 <header>
   <h2>Passkey Autofill</h2>
 </header>
@@ -10,9 +14,6 @@
   <p><%= text_field_tag :user_id, nil, placeholder: 'autofill only', autocomplete: 'webauthn' %></p>
 <% end %>
 
-<%
-=begin
-%>
 <p class="avatar">
   <span>or</span>
 </p>
@@ -27,20 +28,25 @@
   <p><%= email_field_tag :email, params[:email], placeholder: 'email', required: true %>
   <p><%= submit_tag 'Sign-up' %></p>
 <% end %>
-<%
-=end
-%>
 
 <p class="avatar">
   <span>or</span>
 </p>
+
+<%
+=end
+%>
 
 <header>
   <h2>Passkey Upgrade</h2>
 </header>
 
 <%= form_tag session_path, id: 'password_form' do %>
-  <p><%= text_field_tag :username, nil, placeholder: 'username', autocomplete: 'username' %></p>
+  <%= hidden_field_tag :credential_id %>
+  <%= hidden_field_tag :authenticator_data %>
+  <%= hidden_field_tag :client_data_json %>
+  <%= hidden_field_tag :signature %>
+  <p><%= text_field_tag :username, nil, placeholder: 'username', autocomplete: 'username webauthn' %></p>
   <p><%= password_field_tag :password, nil, placeholder: 'password', autocomplete: 'password' %></p>
   <p><%= submit_tag 'Login' %></p>
 <% end %>
@@ -51,5 +57,5 @@
 
   // authentication_form.addEventListener('submit', password_less.authenticate);
   // registration_form.addEventListener('submit', password_less.register);
-  password_less.autocomplete(authentication_form);
+  password_less.autocomplete(password_form);
 </script>
