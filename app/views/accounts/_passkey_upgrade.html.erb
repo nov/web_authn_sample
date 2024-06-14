@@ -1,0 +1,17 @@
+<%= form_tag account_path, method: :put, id: 'binding_form' do %>
+  <%= hidden_field_tag :attestation_object %>
+  <%= hidden_field_tag :client_data_json %>
+<% end %>
+
+<script src="/web-authn.js"></script>
+<script>
+  const challenge = "<%= session[:challenge] %>";
+
+  PublicKeyCredential.getClientCapabilities().then((capability) => {
+    if (capability.conditionalCreate) {
+      password_less.autocreate("<%= current_account.email %>");
+    } else {
+      console.info('conditional creation unavailable');
+    }
+  });
+</script>
