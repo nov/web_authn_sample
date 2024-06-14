@@ -47,7 +47,7 @@
   <%= hidden_field_tag :client_data_json %>
   <%= hidden_field_tag :signature %>
   <p><%= text_field_tag :username, nil, placeholder: 'username', autocomplete: 'username webauthn' %></p>
-  <p><%= password_field_tag :password, nil, placeholder: 'password', autocomplete: 'password' %></p>
+  <p><%= password_field_tag :password, nil, placeholder: 'password', autocomplete: 'password webauthn' %></p>
   <p><%= submit_tag 'Login' %></p>
 <% end %>
 
