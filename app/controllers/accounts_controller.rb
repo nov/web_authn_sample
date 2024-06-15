@@ -36,4 +36,9 @@ class AccountsController < ApplicationController
     end
     redirect_to root_url
   end
+
+  def destroy
+    current_account.destroy
+    redirect_to root_url
+  end
 end

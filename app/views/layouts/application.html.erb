@@ -14,11 +14,15 @@
       <h1>WebAuthn Gem Sample</h1>
       <section id="main">
         <%= yield %>
+        <span class="error"><%= flash[:alert] %></span>
       </section>
       <footer id="footer">
         <% if authenticated? %>
           <%= form_tag session_path, method: :delete do %>
-            <p><%= submit_tag :logout %></p>
+            <p><%= submit_tag 'Logout' %></p>
+          <% end %>
+          <%= form_tag account_path, method: :delete do %>
+            <p><%= submit_tag 'Sign-up again' %></p>
           <% end %>
         <% end %>
         <p>
