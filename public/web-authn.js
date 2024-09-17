@@ -65,7 +65,7 @@ password_less.autocreate = (email) => {
     }],
     authenticatorSelection: {
       authenticatorAttachment: 'platform',
-      userVerification: 'required',
+      // userVerification: 'required',
     },
     user: user
   };
